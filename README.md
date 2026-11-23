@@ -73,3 +73,9 @@ Results of `v5`, the main run, on all 105 traces: the paper's per-load filter st
 `python scripts/variant_summary.py results/round1/runs.csv v1=results/main_v1/bf_oracle p64=results/filter/p64` compares variants trace by trace.
 
 Shadow results, v5: on the same branches, RUNLTS makes 14% fewer mispredictions than TAGE-SC-L on the first lookahead branch but only 5% fewer at depth 16 to 31, over all 105 traces. Giving RUNLTS the true register values along the path cuts its deep mispredictions by up to 6% on 26 traces and brings its edge back from 5% to 11%, so stale values explain most of the drop. TAGE-SC-L's shadow scores are in `results/main_v5/bf_oracle`, RUNLTS's in `results/shadow_v5`. `python scripts/shadow_summary.py results/shadow results/round1/runs.csv results/main_v1/runs.csv [base new]` prints the table.
+
+## Third-party code
+
+- `cbp2025/` comes from github.com/ramisheikh/cbp2025 at commit 6074966. Its files keep their original BSD-style notices from NC State University and ARM.
+- `cbp2025/lib/spdlog/` is the spdlog logging library with the bundled fmt library, both under the MIT license.
+- `cbp2025/predictors/runlts/` is RUNLTS by Koizumi et al., the winning entry of the 2025 Championship Branch Prediction, taken from the public release on the CBP2025 workshop page. We added the read-only lookahead methods described in `docs/bfetch_design.md`. The release came without a license file. All credit for the predictor goes to its authors, and we will take the code down if they ask.
