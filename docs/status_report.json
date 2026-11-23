@@ -1,0 +1,20 @@
+[
+  {"kind": "title", "text": "Revisiting B-Fetch with Modern Branch Predictors: Status Report"},
+  {"kind": "names", "text": "Zhi Guo, [teammate names]"},
+  {"kind": "h", "text": "Abstract"},
+  {"kind": "p", "text": "B-Fetch, a MICRO 2014 data prefetcher, follows the predicted path ahead of fetch and computes load addresses on it from register values plus learned offsets, so how far it can see depends on the branch predictor. The paper only tried a small tournament predictor. We implement B-Fetch in the CBP2025 simulator, whose traces carry register values and memory addresses, and drive its lookahead with a tournament predictor, TAGE-SC-L, RUNLTS and an oracle that follows the correct path. RUNLTS, the 2025 branch prediction champion, adds RBias to TAGE-SC to correlate branches with register values. The core always predicts branches perfectly, so only the lookahead predictor changes between runs, and we report how much of the oracle's gain each real predictor keeps on traces where the oracle helps."},
+  {"kind": "p", "text": "Under the paper's per-load filter, a blocked load sends no prefetches and so never gets back in. Only 38% of B-Fetch's addresses fall in the right block on a 16-wide core, so the filter soon stops 86% of candidates on the median trace, and the oracle gains at least 5% on just 5 of 105 traces. There the tournament predictor keeps 38% of the oracle gain, TAGE-SC-L 42% and RUNLTS 44%. On the same branches, RUNLTS's edge over TAGE-SC-L falls from 14% fewer mispredictions on the first lookahead branch to 5% at 16 blocks or more, since RBias only sees register values from the lookahead's start. True values restore most of it."},
+  {"kind": "h", "text": "Done so far"},
+  {"kind": "li", "text": "Set up CBP2025 with all 105 traces. We fixed a crash under perfect branch prediction and added prefetch usefulness counters and a bandwidth limit."},
+  {"kind": "li", "text": "Step 1: with perfect branch prediction, a perfect data cache raises IPC over no prefetching by 38% on geometric mean, from 6% for media to 126% for infra. Stride gets 6%."},
+  {"kind": "li", "text": "Implemented every part of B-Fetch with the paper's pipeline timing. It uses only register values that exist at that cycle. TAGE-SC-L and RUNLTS got a read-only lookahead mode, and we built a 6.1 KB tournament predictor like the paper's and an oracle."},
+  {"kind": "li", "text": "Ran B-Fetch with each predictor on all 105 traces, using 16 times larger tables and four branches per cycle, since the paper's setup cannot keep up with a 16-wide core. It slows no trace by more than 1%, and the oracle gains at least 5% on 5, our focus set."},
+  {"kind": "li", "text": "Found that the filter is what limits B-Fetch. Two early useless prefetches block a load for good, useful loads included. On the 16 traces where B-Fetch gained most when blocked loads could retry, the oracle's mean gain falls from 23% to 4% under the paper's rule."},
+  {"kind": "li", "text": "Added a shadow mode that scores the core predictor along the oracle path, so TAGE-SC-L and RUNLTS face the same branches and RUNLTS can also get true register values."},
+  {"kind": "h", "text": "Next steps"},
+  {"kind": "li", "text": "See which loads get blocked and how often their addresses were right. Nov 25, [name]."},
+  {"kind": "li", "text": "Find why addresses miss and what a deeper lookahead would add. Dec 2, [name]."},
+  {"kind": "li", "text": "Test the confidence threshold, the paper's table sizes and bandwidth. Dec 4, [name]."},
+  {"kind": "li", "text": "Best effort: project register values along the predicted path for RBias, worth up to 6% fewer deep lookahead mispredictions. Dec 9, [name]."},
+  {"kind": "li", "text": "Talk on Dec 15 and final report on Dec 18, all of us."}
+]

@@ -1,0 +1,162 @@
+5000000 instrs 
+10000000 instrs 
+15000000 instrs 
+20000000 instrs 
+EOF
+WINDOW_SIZE = 1024
+FETCH_WIDTH = 16
+FETCH_NUM_BRANCH = 16
+FETCH_STOP_AT_INDIRECT = 1
+FETCH_STOP_AT_TAKEN = 1
+FETCH_MODEL_ICACHE = 1
+PERFECT_BRANCH_PRED = 1
+PERFECT_INDIRECT_PRED = 1
+PIPELINE_FILL_LATENCY = 10
+NUM_LDST_LANES = 8
+NUM_ALU_LANES = 16
+MEMORY HIERARCHY CONFIGURATION---------------------
+STRIDE Prefetcher = 0
+BFETCH = 1
+PERFECT_CACHE = 0
+WRITE_ALLOCATE = 1
+Within-pipeline factors:
+	AGEN latency = 1 cycle
+	Store Queue (SQ): SQ size = window size, oracle memory disambiguation, store-load forwarding = 1 cycle after store's or load's agen.
+	* Note: A store searches the L1$ at commit. The store is released
+	* from the SQ and window, whether it hits or misses. Store misses
+	* are buffered until the block is allocated and the store is
+	* performed in the L1$. While buffered, conflicting loads get
+	* the store's data as they would from the SQ.
+I$: 128 KB, 8-way set-assoc., 64B block size
+L1$: 128 KB, 8-way set-assoc., 64B block size, 3-cycle search latency
+L2$: 4 MB, 8-way set-assoc., 64B block size, 12-cycle search latency
+L3$: 32 MB, 16-way set-assoc., 128B block size, 50-cycle search latency
+Main Memory: 150-cycle fixed search time
+---------------------------STORE QUEUE MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)---------------------------
+Number of loads: 5594292
+Number of loads that miss in SQ: 4033678 (72.10%)
+Number of PFs issued to the memory system 151204
+---------------------------------------------------------------------------------------------------------------------------------------
+------------------------MEMORY HIERARCHY MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)-------------------------
+I$:
+	accesses   = 25800588
+	misses     = 4262
+	miss ratio = 0.02%
+	pf accesses   = 0
+	pf misses     = 0
+	pf miss ratio = -nan%
+L1$:
+	accesses   = 7898045
+	misses     = 19738
+	miss ratio = 0.25%
+	pf accesses   = 151204
+	pf misses     = 26010
+	pf miss ratio = 17.20%
+	pf useful     = 570
+	pf late       = 67
+	pf useless    = 24953
+	pf redundant  = 125194
+L2$:
+	accesses   = 24000
+	misses     = 6308
+	miss ratio = 26.28%
+	pf accesses   = 26010
+	pf misses     = 11709
+	pf miss ratio = 45.02%
+L3$:
+	accesses   = 6308
+	misses     = 3578
+	miss ratio = 56.72%
+	pf accesses   = 11709
+	pf misses     = 9664
+	pf miss ratio = 82.53%
+---------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------Prefetcher (Full Simulation i.e. No Warmup)----------------------------------------------
+Num Trainings :0
+Num Prefetches generated :0
+Num Prefetches issued :0
+Num Prefetches filtered by PF queue :0
+Num untimely prefetches dropped from PF queue :0
+Num prefetches not issued LDST contention :0
+Num prefetches not issued stride 0 :0
+---------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------B-Fetch (Full Simulation i.e. No Warmup)------------------------------------------------
+BFETCH_LOOKAHEAD_PREDICTOR = tournament
+BFETCH_CONF_THRESHOLD = 0.75
+BFETCH_MAX_DEPTH = 32
+BFETCH_BRTC_ENTRIES = 4096
+BFETCH_MHT_ENTRIES = 2048
+BFETCH_LOOKAHEAD_WIDTH = 4
+BFETCH_PER_LOAD_FILTER = 1
+Lookaheads started :1205997
+Branches skipped while engine busy :498536
+Avg lookahead depth :2.106
+Avg on-path depth :1.938
+Lookahead stop, max depth :0
+Lookahead stop, confidence :995743
+Lookahead stop, BrTC miss :122128
+Lookahead stop, no target :88126
+Lookahead stop, off true path (oracle) :0
+Lookahead cond predictions checked :2316570
+Lookahead cond predictions correct :2200766
+Blocks visited on true path :2337220
+Blocks visited off true path :202802
+MHT misses :916020
+Register values not yet available :2213
+Prefetch candidates :3139535
+Candidates on true path :2907708
+Candidates on true path with correct address :1468837
+Primary candidates on true path whose load executes in that block :2317789
+  same block as that load's real address :1185122
+  within 4 blocks of it :1486657
+Candidates off true path :231827
+Candidates filtered by per-load filter :2102415
+Candidates let through as filter probes :140160
+Candidates dropped, recently prefetched :881252
+Candidates dropped, already queued :0
+Candidates dropped, queue full :0
+Prefetches queued :155868
+Prefetches issued :151204
+Prefetches dropped, too old :4664
+Prefetches delayed by LDST contention :1761399
+Tournament cond branches :1125035
+Tournament cond correct :1060899
+---------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------ILP LIMIT STUDY (Full Simulation i.e. Counts Not Reset When Warmup Ends)--------------------------------
+instructions = 20000044
+cycles       = 2845841
+CycWP        = 0
+IPC          = 7.0278
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------BRANCH PREDICTION MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)----------------------------------------------
+Type                   NumBr     MispBr        mr     mpki
+CondDirect          1125035      24354   2.1647%   1.2177
+JumpDirect           254376          0   0.0000%   0.0000
+JumpIndirect         101890          0   0.0000%   0.0000
+JumpReturn           223232          0   0.0000%   0.0000
+Not control        24096055          0   0.0000%   0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (Last 10M instructions)-----------------------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    10000044      1281043   7.8062     559613       9103   0.4368       0.0071   1.6267%   0.9103          0     0.0000     0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (Last 25M instructions)-----------------------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    20000044      2845841   7.0278    1125035      24354   0.3953       0.0086   2.1647%   1.2177          0     0.0000     0.0000
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (50 Perc instructions)---------------------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    10000044      1281043   7.8062     559613       9103   0.4368       0.0071   1.6267%   0.9103          0     0.0000     0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)-------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    20000044      2845841   7.0278    1125035      24354   0.3953       0.0086   2.1647%   1.2177          0     0.0000     0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Read 20000044 instrs 

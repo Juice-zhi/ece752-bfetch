@@ -1,0 +1,191 @@
+5000000 instrs 
+10000000 instrs 
+15000000 instrs 
+20000000 instrs 
+25000000 instrs 
+30000000 instrs 
+35000000 instrs 
+EOF
+WINDOW_SIZE = 1024
+FETCH_WIDTH = 16
+FETCH_NUM_BRANCH = 16
+FETCH_STOP_AT_INDIRECT = 1
+FETCH_STOP_AT_TAKEN = 1
+FETCH_MODEL_ICACHE = 1
+PERFECT_BRANCH_PRED = 1
+PERFECT_INDIRECT_PRED = 1
+PIPELINE_FILL_LATENCY = 10
+NUM_LDST_LANES = 8
+NUM_ALU_LANES = 16
+MEMORY HIERARCHY CONFIGURATION---------------------
+STRIDE Prefetcher = 0
+BFETCH = 1
+Prefetch fills inserted at LRU: L1D no, L2/L3 no
+PERFECT_CACHE = 0
+WRITE_ALLOCATE = 1
+Within-pipeline factors:
+	AGEN latency = 1 cycle
+	Store Queue (SQ): SQ size = window size, oracle memory disambiguation, store-load forwarding = 1 cycle after store's or load's agen.
+	* Note: A store searches the L1$ at commit. The store is released
+	* from the SQ and window, whether it hits or misses. Store misses
+	* are buffered until the block is allocated and the store is
+	* performed in the L1$. While buffered, conflicting loads get
+	* the store's data as they would from the SQ.
+I$: 128 KB, 8-way set-assoc., 64B block size
+L1$: 128 KB, 8-way set-assoc., 64B block size, 3-cycle search latency
+L2$: 4 MB, 8-way set-assoc., 64B block size, 12-cycle search latency
+L3$: 32 MB, 16-way set-assoc., 128B block size, 50-cycle search latency
+Main Memory: 150-cycle fixed search time
+Main Memory bandwidth: unlimited
+---------------------------STORE QUEUE MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)---------------------------
+Number of loads: 12408020
+Number of loads that miss in SQ: 9361682 (75.45%)
+Number of PFs issued to the memory system 110108
+---------------------------------------------------------------------------------------------------------------------------------------
+------------------------MEMORY HIERARCHY MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)-------------------------
+I$:
+	accesses   = 46197759
+	misses     = 27077
+	miss ratio = 0.06%
+	pf accesses   = 0
+	pf misses     = 0
+	pf miss ratio = -nan%
+	avg demand latency = 0.05
+L1$:
+	accesses   = 18564185
+	misses     = 159924
+	miss ratio = 0.86%
+	pf accesses   = 110108
+	pf misses     = 33006
+	pf miss ratio = 29.98%
+	avg demand latency = 10.44
+	pf useful     = 2017
+	pf late       = 339
+	pf useless    = 30986
+	pf redundant  = 77102
+L2$:
+	accesses   = 187001
+	misses     = 56128
+	miss ratio = 30.01%
+	pf accesses   = 33006
+	pf misses     = 26444
+	pf miss ratio = 80.12%
+	avg demand latency = 60.65
+L3$:
+	accesses   = 56128
+	misses     = 27603
+	miss ratio = 49.18%
+	pf accesses   = 26444
+	pf misses     = 23169
+	pf miss ratio = 87.62%
+	avg demand latency = 162.09
+---------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------Prefetcher (Full Simulation i.e. No Warmup)----------------------------------------------
+Num Trainings :0
+Num Prefetches generated :0
+Num Prefetches issued :0
+Num Prefetches filtered by PF queue :0
+Num untimely prefetches dropped from PF queue :0
+Num prefetches not issued LDST contention :0
+Num prefetches not issued stride 0 :0
+---------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------B-Fetch (Full Simulation i.e. No Warmup)------------------------------------------------
+BFETCH_LOOKAHEAD_PREDICTOR = oracle
+BFETCH_CONF_THRESHOLD = 0.75
+BFETCH_MAX_DEPTH = 32
+BFETCH_BRTC_ENTRIES = 4096
+BFETCH_MHT_ENTRIES = 2048
+BFETCH_LOOKAHEAD_WIDTH = 4
+BFETCH_PER_LOAD_FILTER = 1
+BFETCH_FILTER_INIT = 2
+BFETCH_FILTER_THRESHOLD = 3
+BFETCH_PROBE_PERIOD = 0
+Lookaheads started :1870558
+Branches skipped while engine busy :6605840
+Avg lookahead depth :10.312
+Avg on-path depth :10.312
+Lookahead stop, max depth :315223
+Lookahead stop, confidence :0
+Lookahead stop, BrTC miss :1553491
+Lookahead stop, no target :0
+Lookahead stop, off true path (oracle) :1844
+Lookahead cond predictions checked :13179135
+Lookahead cond predictions correct :13179135
+Lookahead cond at depth 0-0 : 1218454 checked, 1218454 correct
+Lookahead cond at depth 1-1 : 1002954 checked, 1002954 correct
+Lookahead cond at depth 2-2 : 826192 checked, 826192 correct
+Lookahead cond at depth 3-3 : 696154 checked, 696154 correct
+Lookahead cond at depth 4-7 : 2205063 checked, 2205063 correct
+Lookahead cond at depth 8-15 : 3034419 checked, 3034419 correct
+Lookahead cond at depth 16-31 : 4195899 checked, 4195899 correct
+Lookahead cond at depth 32-64 : 0 checked, 0 correct
+Shadow register values : from the lookahead start
+Shadow core predictor at depth 0-0 : 1218454 checked, 1175545 correct
+Shadow core predictor at depth 1-1 : 1002954 checked, 974048 correct
+Shadow core predictor at depth 2-2 : 826192 checked, 805750 correct
+Shadow core predictor at depth 3-3 : 696154 checked, 677840 correct
+Shadow core predictor at depth 4-7 : 2205063 checked, 2144522 correct
+Shadow core predictor at depth 8-15 : 3034419 checked, 2946976 correct
+Shadow core predictor at depth 16-31 : 4195899 checked, 4064245 correct
+Shadow core predictor at depth 32-64 : 0 checked, 0 correct
+Blocks visited on true path :19288871
+Blocks visited off true path :0
+MHT misses :8918273
+Register values not yet available :82507
+Prefetch candidates :17773303
+Candidates on true path :17773303
+Candidates on true path with correct address :5753107
+Primary candidates on true path whose load executes in that block :15235161
+  same block as that load's real address :4951040
+  within 4 blocks of it :6840363
+Candidates off true path :0
+Candidates filtered by per-load filter :17060502
+Candidates let through as filter probes :0
+Candidates dropped, recently prefetched :602693
+Candidates dropped, already queued :0
+Candidates dropped, queue full :0
+Prefetches queued :110108
+Prefetches issued :110108
+Prefetches dropped, too old :0
+Prefetches delayed by LDST contention :322623
+Tournament cond branches :5842811
+Tournament cond correct :5459624
+---------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------ILP LIMIT STUDY (Full Simulation i.e. Counts Not Reset When Warmup Ends)--------------------------------
+instructions = 39999746
+cycles       = 7960058
+CycWP        = 0
+IPC          = 5.0251
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------BRANCH PREDICTION MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)----------------------------------------------
+Type                   NumBr     MispBr        mr     mpki
+CondDirect          5842811     173015   2.9612%   4.3254
+JumpDirect          1420173          0   0.0000%   0.0000
+JumpIndirect         213848          0   0.0000%   0.0000
+JumpReturn           999566          0   0.0000%   0.0000
+Not control        37721361          0   0.0000%   0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (Last 10M instructions)-----------------------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    10999746      1742200   6.3137    1583408      60471   0.9089       0.0347   3.8190%   5.4975          0     0.0000     0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (Last 25M instructions)-----------------------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    25999746      4174148   6.2288    3826680     103851   0.9168       0.0249   2.7139%   3.9943          0     0.0000     0.0000
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (50 Perc instructions)---------------------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    20999746      3450517   6.0860    3176039      94426   0.9205       0.0274   2.9731%   4.4965          0     0.0000     0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------DIRECT CONDITIONAL BRANCH PREDICTION MEASUREMENTS (Full Simulation i.e. Counts Not Reset When Warmup Ends)-------------------------------------
+       Instr       Cycles      IPC      NumBr     MispBr BrPerCyc MispBrPerCyc        MR     MPKI      CycWP   CycWPAvg   CycWPPKI
+    39999746      7960058   5.0251    5842811     173015   0.7340       0.0217   2.9612%   4.3254          0     0.0000     0.0000
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Read 39999746 instrs 

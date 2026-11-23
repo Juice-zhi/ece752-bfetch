@@ -1,0 +1,5 @@
+# Keep LF endings everywhere so the shell scripts and Makefiles work inside the Linux container
+* text=auto eol=lf
+*.docx binary
+*.gz binary
+*.pdf binary

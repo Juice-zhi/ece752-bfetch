@@ -1,0 +1,25 @@
+# The 105 CBP2025 traces are about 26 GB with their archives. Download them as described in README.md.
+traces/
+
+# Build outputs. Rebuild with make inside the cbp-dev container. bin/ keeps the frozen binaries
+# that produced each results folder, since RUNLTS results can shift between builds.
+*.o
+*.a
+cbp2025/cbp
+cbp2025/cbp_runlts
+
+# Third-party papers and archives that are not ours to redistribute
+runlts/
+docs/bfetch_paper_text.txt
+
+# Upstream git history of the simulator (github.com/ramisheikh/cbp2025 at 6074966), kept locally
+.cbp2025-upstream.git/
+
+# Files unrelated to the group project
+compress_demo.py
+topic_survey.docx
+proposal.docx
+
+# Leftovers from interrupted runs
+*.tmp
+__pycache__/
