@@ -61,6 +61,25 @@ python scripts/report_numbers.py results/main_v1/summary.csv
 
 Results of `v5`, the main run, on all 105 traces: the paper's per-load filter stops 86% of B-Fetch's candidates on the median trace, so B-Fetch slows no trace by more than 1% but the oracle gains at least 5% on only 5 traces (fp_1, infra_1, infra_5, infra_7, int_21). On those, the tournament predictor keeps 38% of the oracle's gain on average, TAGE-SC-L 42% and RUNLTS 44%. Only 38% of B-Fetch's predicted addresses fall in the right block.
 
+## Sensitivity: confidence threshold, table sizes and bandwidth
+
+`scripts/run_sens.sh` reruns B-Fetch with the frozen v5 binaries, so the results compare directly with `main_v5`. No code change was needed: `-C`, `-K brtc=,mht=` and `-W` already exist in those binaries.
+
+```bash
+docker run --rm -v "$PWD:/proj" cbp-dev bash /proj/scripts/run_sens.sh 28
+python scripts/sens_summary.py results/sens results/round1/runs.csv results/main_v5/runs.csv
+```
+
+| Sweep (`SETS`) | Values | Predictors |
+|---|---|---|
+| `conf` | `-C 0.5`, `0.6`, `0.9` (v5 uses 0.75) | tournament, TAGE-SC-L, RUNLTS; the oracle never loses confidence |
+| `tables` | paper's `brtc=256,mht=128`, and `brtc=1024,mht=512` (v5 uses 4096 and 2048) | all four |
+| `bw` | `-W 10` and `-W 20` cycles per 64-byte block (v5 is unlimited) | no prefetching, stride and all four |
+
+By default it runs the 45 traces in `results/round1/candidates_headroom20.txt`, 1305 runs in total. `TRACES=all` runs all 105 traces, and `SETS="conf"` runs one sweep. The summary prints the v5 rows on the same traces as the reference point of each sweep.
+
+On an Apple Silicon Mac, add `--platform linux/amd64` to `docker build` and `docker run`, because the frozen binaries are x86-64. They then run under emulation and take longer.
+
 ## Side tests on cache pollution
 
 | Folder | Script | What varies |
