@@ -80,6 +80,21 @@ By default it runs the 45 traces in `results/round1/candidates_headroom20.txt`, 
 
 On an Apple Silicon Mac, add `--platform linux/amd64` to `docker build` and `docker run`, because the frozen binaries are x86-64. They then run under emulation and take longer.
 
+With 22 parallel jobs and 16 GB for Docker, 10 runs of `infra_8` were killed for lack of memory. Rerunning with 4 jobs finished them, so use fewer jobs if memory is short.
+
+Results on the 45 traces, in `results/sens/summary.txt`. Gains are on the 5 focus traces, over no prefetching:
+
+| Setting | Oracle | Tournament | TAGE-SC-L | RUNLTS |
+|---|---|---|---|---|
+| v5: `-C 0.75`, 4096/2048, unlimited | 11.3% | 5.6% | 5.9% | 6.2% |
+| `-C 0.5` | - | 6.3% | 6.5% | 6.3% |
+| `-C 0.9` | - | 3.6% | 5.0% | 5.9% |
+| paper's tables, 256/128 | 8.5% | 5.6% | 5.5% | 5.3% |
+| `-W 10` | 9.8% | 5.6% | 5.7% | 6.4% |
+| `-W 20` | 8.8% | 7.6% | 4.9% | 5.7% |
+
+Lowering the threshold to 0.5 deepens RUNLTS's lookahead from 7.6 to 11.6 branches but adds under 1 point for the real predictors. The paper's tables cut the oracle's lookahead from 19.9 to 8.7 branches and its gain from 11.3% to 8.5%, so the larger tables matter for the oracle but barely for the real predictors, which the threshold stops earlier anyway. Limiting bandwidth costs the oracle 1.5 to 2.5 points but barely changes the real predictors or stride (12.8% unlimited, 12.7% at `-W 10`, 12.4% at `-W 20` over all 45 traces), so these limits do not bind on these traces. No setting closes the gap to the oracle, so the per-load filter and address accuracy remain the main limits.
+
 ## Side tests on cache pollution
 
 | Folder | Script | What varies |

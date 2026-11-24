@@ -1,0 +1,23 @@
+environment: line 1:   102 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+FAILED W10_oracle infra/infra_8_trace.gz
+environment: line 1:   112 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+FAILED T256_tourn infra/infra_8_trace.gz
+FAILED T256_tage infra/infra_8_trace.gz
+environment: line 1:   107 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+environment: line 1:   111 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+FAILED T256_oracle infra/infra_8_trace.gz
+FAILED C0.5_tourn infra/infra_8_trace.gz
+environment: line 1:    99 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+FAILED C0.9_tourn infra/infra_8_trace.gz
+environment: line 1:   105 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+environment: line 1:   115 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+FAILED T1024_oracle infra/infra_8_trace.gz
+environment: line 1:   116 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+FAILED T1024_tourn infra/infra_8_trace.gz
+FAILED C0.5_tage infra/infra_8_trace.gz
+environment: line 1:   109 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+FAILED W10_tourn infra/infra_8_trace.gz
+environment: line 1:   118 Killed                  $cmd "$trace" > "$log.tmp" 2>&1
+sens done: 1295 logs
+== rerun of the 10 infra_8 runs killed for memory, 4 jobs
+sens done: 1305 logs
